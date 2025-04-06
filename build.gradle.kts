@@ -14,11 +14,6 @@ base.archivesName.set("kotlinforforge")
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 
-tasks.build {
-    dependsOn("kotlinSourcesJar")
-    dependsOn("shadowJar")
-}
-
 repositories {
     mavenCentral()
 }
@@ -67,51 +62,55 @@ configure<net.minecraftforge.gradle.userdev.UserDevExtension> {
     }
 }
 
-// Shadow JAR configuration
-tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-    archiveClassifier.set("obf")
-
-    dependencies {
-        include(dependency("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"))
-        include(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"))
-        include(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"))
-        include(dependency("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"))
-        include(dependency("org.jetbrains:annotations:${annotationsVersion}"))
-        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}"))
-        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${coroutinesVersion}"))
-        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutinesVersion}"))
-        include(dependency("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:${serializationVersion}"))
-        include(dependency("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:${serializationVersion}"))
+tasks {
+    build {
+        dependsOn("kotlinSourcesJar")
+        dependsOn("shadowJar")
     }
-}
 
-// JAR configuration
-tasks.jar {
-    manifest {
-        attributes(mapOf(
-            "FMLModType" to "LANGPROVIDER"
-        ))
-        attributes(mapOf(
-            "Specification-Title" to "Mod Language Provider",
-            "Specification-Vendor" to "Forge",
-            "Specification-Version" to "1",
-            "Implementation-Title" to project.name,
-            "Implementation-Version" to project.version,
-            "Implementation-Vendor" to "thedarkcolour",
-            "Implementation-Timestamp" to SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(Date())
-        ), "thedarkcolour/kotlinforforge/")
+    jar {
+        manifest {
+            attributes(mapOf(
+                "FMLModType" to "LANGPROVIDER"
+            ))
+            attributes(mapOf(
+                "Specification-Title" to "Mod Language Provider",
+                "Specification-Vendor" to "Forge",
+                "Specification-Version" to "1",
+                "Implementation-Title" to project.name,
+                "Implementation-Version" to project.version,
+                "Implementation-Vendor" to "thedarkcolour",
+                "Implementation-Timestamp" to SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(Date())
+            ), "thedarkcolour/kotlinforforge/")
+        }
+    }
+
+    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+        archiveClassifier.set("obf")
+        dependencies {
+            include(dependency("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"))
+            include(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}"))
+            include(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"))
+            include(dependency("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"))
+            include(dependency("org.jetbrains:annotations:${annotationsVersion}"))
+            include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}"))
+            include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${coroutinesVersion}"))
+            include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutinesVersion}"))
+            include(dependency("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:${serializationVersion}"))
+            include(dependency("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:${serializationVersion}"))
+        }
+    }
+
+    compileKotlin {
+        compilerOptions.configureKotlinOptions()
+    }
+
+    compileTestKotlin {
+        compilerOptions.configureKotlinOptions()
     }
 }
 
 // Kotlin compiler options
-fun org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions.configureKotlinOptions() {
+fun org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions.configureKotlinOptions() {
     freeCompilerArgs = listOf("-Xexplicit-api=warning", "-Xjvm-default=all")
-}
-
-tasks.compileKotlin {
-    kotlinOptions.configureKotlinOptions()
-}
-
-tasks.compileTestKotlin {
-    kotlinOptions.configureKotlinOptions()
 }
