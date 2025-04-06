@@ -8,7 +8,7 @@ plugins {
     kotlin("plugin.serialization") version "2.0.21"
 }
 
-version = "1.17.0"
+version = "1.18.0-2.0.21"
 group = "thedarkcolour.kotlinforforge"
 base.archivesName.set("kotlinforforge")
 
