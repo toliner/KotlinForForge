@@ -1,16 +1,16 @@
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
 
 plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("net.minecraftforge.gradle") version "[6.0.16,6.2)"
-    kotlin("jvm") version "2.0.21"
-    kotlin("plugin.serialization") version "2.0.21"
+    kotlin("jvm") version "2.1.10"
+    kotlin("plugin.serialization") version "2.1.20"
 }
 
-version = "1.18.0-2.0.21"
-group = "thedarkcolour.kotlinforforge"
-base.archivesName.set("kotlinforforge")
+version = "1.18.0-2.1.10"
+group = "dev.toliner.kotlinforforge"
+base.archivesName.set("kotlin-for-forge-unofficial")
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 
@@ -19,7 +19,7 @@ repositories {
 }
 
 val minecraft by configurations
-val kotlinVersion = "2.0.21"
+val kotlinVersion = "2.1.10"
 val coroutinesVersion = "1.10.1"
 val annotationsVersion = "26.0.2"
 val serializationVersion = "1.8.1"

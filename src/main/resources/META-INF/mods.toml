@@ -5,9 +5,9 @@ license="LGPL v2.1"
 [[mods]]
 displayName="Kotlin for Forge"
 modId="kotlinforforge"
-version="1.18.0-2.0.21"
-authors="TheDarkColour, toliner"
-credits="Herobrine knows all. Thanks to Username404-59 and TheOnlyTails on GitHub"
+version="1.18.0-2.1.10"
+authors="toliner"
+credits="Herobrine knows all. Thanks to TheDarkColour, Username404-59 and TheOnlyTails on GitHub"
 issueTrackerURL="https://github.com/toliner/KotlinForForge/issues"
 description='''
 Kotlin for Forge. Allows mods to use the Kotlin programming language.
@@ -22,6 +22,6 @@ side="BOTH"
 [[dependencies.kotlinforforge]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.14,1.17)"
+versionRange="[1.16,1.17)"
 ordering="NONE"
 side="BOTH"
